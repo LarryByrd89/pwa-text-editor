@@ -28,6 +28,8 @@ export default class {
       console.info('Loaded data from IndexedDB, injecting into editor');
       this.editor.setValue(data || localData || header);
     });
+    
+
 
     this.editor.on('change', () => {
       localStorage.setItem('content', this.editor.getValue());
@@ -36,7 +38,11 @@ export default class {
     // Save the content of the editor when the editor itself is loses focus
     this.editor.on('blur', () => {
       console.log('The editor has lost focus');
-      putDb(localStorage.getItem('content'));
+      try {
+        putDb(localStorage.getItem('content'));
+      } catch (error) {
+        console.error('Error saving to IndexedDB:', error);
+      }
     });
   }
 }

@@ -1,14 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { InjectManifest } = require('workbox-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 module.exports = () => {
   return {
     mode: 'development',
     entry: {
       main: './src/js/index.js',
-      install: './src/js/install.js',
+      install: './src/js/install.js'
     },
     output: {
       filename: '[name].bundle.js',
@@ -16,8 +16,8 @@ module.exports = () => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './client/src/index.html',
-        title: 'Just Another Text Editor',
+        template: './index.html',
+        title: 'J.A.T.E'
       }),
       new InjectManifest({
         swSrc: './src-sw.js',
@@ -27,21 +27,22 @@ module.exports = () => {
         fingerprints: false,
         inject: true,
         name: 'Just Another Text Editor',
-        short_name: 'Text Editor',
-        description: 'Create notes and code snippets.',
-        background_color: '#ffffff',
+        short_name: 'J.A.T.E',
+        description: 'Takes notes with JavaScript syntax highlighting!',
+        background_color: '#225ca3',
         theme_color: '#225ca3',
-        start_url: './',
-        publicPath: './',
+        start_url: '/',
+        publicPath: '/',
         icons: [
           {
-            src: path.resolve('client/src/favicon.ico'),
+            src: path.resolve('src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
             destination: path.join('assets', 'icons'),
           },
         ],
       }),
     ],
+
     module: {
       rules: [
         {
