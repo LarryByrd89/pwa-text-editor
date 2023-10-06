@@ -28,12 +28,16 @@ registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // TODO: Implement asset caching
 registerRoute(
-  ({ request }) => ['style', 'script', 'worker'].includes(request.destination),
-  new StaleWhileRevalidate({
-    cacheName: 'asset-cache',
+  /\.(txt|docx|pdf|html|png|jpe?g|gif|json)$/,
+  new CacheFirst({
+    cacheName: 'asset-cache', 
     plugins: [
       new CacheableResponsePlugin({
-        statuses: [0, 200],
+        statuses: [200], 
+      }),
+      new ExpirationPlugin({
+        maxEntries: 30, 
+        maxAgeSeconds: 10 * 24 * 60 * 60,
       }),
     ],
   })
